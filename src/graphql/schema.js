@@ -6,6 +6,8 @@ import {
   GraphQLList,
 } from 'graphql';
 
+const wait = delay => new Promise(resolve => setTimeout(resolve, delay));
+
 const PersonType = new GraphQLObjectType({
   name: 'Person',
   fields: {
@@ -25,7 +27,7 @@ const QueryType = new GraphQLObjectType({
   fields: {
     people: {
       type: new GraphQLList(PersonType),
-      resolve: () => peopleData,
+      resolve: () => wait(500).then(() => peopleData),
     },
   },
 });

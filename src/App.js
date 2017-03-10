@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
+import Repro from './Repro';
 
 class App extends Component {
   render() {
-    const { data: { loading, people } } = this.props;
     return (
       <main>
         <header>
@@ -13,35 +13,19 @@ class App extends Component {
             This is a template that you can use to demonstrate an error in Apollo Client.
             Edit the source code and watch your browser window reload with the changes.
           </p>
-          <p>
-            The code which renders this component lives in <code>./src/App.js</code>.
-          </p>
-          <p>
-            The GraphQL schema is in <code>./src/graphql/schema</code>.
-            Currently the schema just serves a list of people with names and ids.
+          <p style={{
+            backgroundColor: 'powderblue',
+            padding: 16,
+          }}>
+            First, I added a 500ms delay to the resolver to simulate a slow GQL backend.<br />
+            Then, we have 2 gql component with a 5 seconds poll interval<br />
+            Keep hitting the <b>Generate random props</b> button until the first component goes red.<br />
           </p>
         </header>
-        {loading ? (
-          <p>Loading…</p>
-        ) : (
-          <ul>
-            {people.map(person => (
-              <li key={person.id}>
-                {person.name}
-              </li>
-            ))}
-          </ul>
-        )}
+        <Repro />
       </main>
     );
   }
 }
 
-export default graphql(
-  gql`{
-    people {
-      id
-      name
-    }
-  }`,
-)(App)
+export default App;
